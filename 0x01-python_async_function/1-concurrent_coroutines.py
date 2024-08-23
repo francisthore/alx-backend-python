@@ -5,9 +5,11 @@ import asyncio
 from typing import List
 wait_random = __import__('0-basic_async_syntax').wait_random
 
+
 def return_sorted_list(unsorted_list: List[float]) -> List[float]:
     """Returns a sorted list"""
     return sorted(unsorted_list)
+
 
 async def wait_n(n: int, max_delay: int) -> List[float]:
     """Spawns a corouting up to n times with max_delay
