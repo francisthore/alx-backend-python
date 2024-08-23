@@ -3,9 +3,8 @@
     waits for a random delay between an
     input 0 and a n input value
 """
-
-import random
 import asyncio
+import random
 
 
 async def wait_random(max_delay=10):
