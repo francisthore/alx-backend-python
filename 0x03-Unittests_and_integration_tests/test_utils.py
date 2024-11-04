@@ -3,8 +3,11 @@
     Unit test for the utils module
 """
 import unittest
-from utils import access_nested_map
+from unittest.mock import Mock, patch
+from utils import access_nested_map, get_json
 from parameterized import parameterized
+from fixtures import TEST_PAYLOAD
+import requests
 
 
 class TestAccessNestedMap(unittest.TestCase):
@@ -33,6 +36,27 @@ class TestAccessNestedMap(unittest.TestCase):
         """
         with self.assertRaises(KeyError):
             access_nested_map(nested_map, path)
+
+
+class TestGetJson(unittest.TestCase):
+    """
+        Tests the functionality of the get json function
+    """
+    @patch('utils.requests.get')
+    def test_get_json(self, mock_get):
+        """
+            Tests the get json function
+        """
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = TEST_PAYLOAD
+
+        mock_get.return_value = mock_response
+
+        url = "https://api.somedummyapi.com/payload"
+        result = get_json(url)
+        self.assertEqual(result, TEST_PAYLOAD)
+        mock_get.assert_called_once_with(url)
 
 
 if __name__ == '__main__':
